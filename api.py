@@ -1,7 +1,7 @@
 import time
 import hashlib
 import requests
-#hola
+
 public_key = '019d806bc3274b523fa0e428d9c8b19b'
 private_key = 'a4ed29bd3586633d05e1df3295863eaad7c5cb4a'
 endpoint = 'http://gateway.marvel.com/v1/public/'
