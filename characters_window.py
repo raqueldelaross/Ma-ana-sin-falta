@@ -9,41 +9,9 @@ from PyQt6.QtWidgets import (QMainWindow, QPushButton, QVBoxLayout, QHBoxLayout,
                              QMessageBox, QLineEdit, QApplication)
 from character_detail_window import CharacterDetailWidget
 
-
-# Claves de acceso y enlace a la api
-public_key = 'feaabe699541637debb4512e71d1e3e6'
-private_key = 'c767186a600a22ac6a7865d430f2ef4c8aaa32d3'
-endpoint = 'https://gateway.marvel.com/v1/public/characters'
+from api import get_character, get_characters
 
 app = QApplication(sys.argv)
-
-
-def get_character(name):
-    ts = str(time.time())
-    hash_key = hashlib.md5((ts+private_key+public_key).encode('utf-8')).hexdigest()
-    params = {"ts": ts, "apikey": public_key, "hash": hash_key, "name": name}
-    response = requests.get(endpoint, params=params)
-    if response.status_code == 200:
-        data = response.json()
-        return data['data']['results']
-    else:
-        return None
-
-
-def get_characters(offset):
-    ts = str(time.time())
-    hash_value = hashlib.md5((ts + private_key + public_key).encode('utf-8')).hexdigest()
-    params = {
-        'ts': ts,
-        'apikey': public_key,
-        'hash': hash_value,
-        'limit': 10,
-        'offset': offset,
-    }
-    response = requests.get(endpoint, params=params)
-    data = response.json()
-    return data['data']['results'], data['data']['total']
-
 
 def get_list(offset):
     characters_list: list[Character] = []

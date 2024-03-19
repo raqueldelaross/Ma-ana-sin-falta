@@ -10,27 +10,10 @@ from PyQt6.QtWidgets import (QMainWindow, QPushButton, QVBoxLayout, QHBoxLayout,
                              QMessageBox, QLineEdit, QApplication)
 from comics_detail_window import ComicsDetailWidget
 
-# Claves de acceso y enlace a la api
-public_key = '019d806bc3274b523fa0e428d9c8b19b'
-private_key = 'a4ed29bd3586633d05e1df3295863eaad7c5cb4a'
-endpoint = 'https://gateway.marvel.com/v1/public/comics'
+from api import get_comics
+
 
 app = QApplication(sys.argv)
-
-
-def get_comics(offset):
-    ts = str(time.time())
-    hash_value = hashlib.md5((ts + private_key + public_key).encode('utf-8')).hexdigest()
-    params = {
-        'ts': ts,
-        'apikey': public_key,
-        'hash': hash_value,
-        'limit': 10,
-        'offset': offset,
-    }
-    response = requests.get(endpoint, params=params)
-    data = response.json()
-    return data['data']['results'], data['data']['total']
 
 
 def get_list(offset):
